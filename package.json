@@ -1,0 +1,40 @@
+{
+    "name": "@damo/cli-docco-plugin",
+    "version": "0.0.1",
+    "main": "index.js",
+    "author": "baqian <st403471258@gmail.com>",
+    "description": "基于Docco的文档构建器",
+    "keywords": [
+      "damo",
+      "cli",
+      "webpack",
+      "docco"
+    ],
+    "homepage": "https://github.com/baqian/damo-team/cli-docco-plugin",
+    "dependencies": {
+        "commander": ">= 0.5.2",
+        "docco": "~0.7.0",
+        "fs-extra": ">= 0.6.0",
+        "highlight.js": ">= 8.0.x",
+        "marked": ">= 0.2.7",
+        "underscore": ">= 1.0.0"
+    },
+    "devDependencies": {
+      
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/baqian/damo-team/cli-docco-plugin.git"
+    },
+    "readmeFilename": "README.md",
+    "maintainers": [
+      {
+        "name": "baqian",
+        "email": "st403471258@gmail.com"
+      }
+    ],
+    "bugs": {
+      "url": "https://github.com/baqian/damo-team/cli-docco-plugin/issues"
+    },
+    "license": "MIT"
+  }

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title><%= title %>-document</title>
+  <link rel="stylesheet" type="text/css" href="<%= css %>">
+  <style>
+    .code .highlight{
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+    .code .highlight pre{
+      width: 98%;
+    }
+    .code .highlight .link{
+      position: absolute;
+      top: 6px;
+      left: -6px;
+      text-decoration: none;
+      padding: 2px 4px;
+      border: 1px solid #0088cc;
+      background: #6666ff;
+      color: white;
+      line-height: 5px;
+      border-radius: 1px;
+    }
+    .code .highlight .link.open{
+      padding: 4px 4px 2px;
+    }
+    .code .highlight .link:hover{
+      background: #0088cc
+    }
+    .code .highlight .close:after{
+      font-family: "fleurons";
+      content: "-";
+    }
+    .code .highlight .open:after{
+      font-family: "fleurons";
+      content: "+";
+    }
+    .code .highlight pre.narrow{
+      overflow: hidden;
+      height: 34px;
+    }
+    pre.narrow:before{
+      position: absolute;
+      margin-top: -4px;
+      color: #f50;
+      content: '...';
+    }
+    #J_iframe{
+      width: 1000px;
+      height: 80%;
+      max-height: 600px;
+      position: absolute;
+      background: white;
+      top: 70px;
+      left: 240px;
+      visibility: hidden;
+      border: 1px solid gray;
+      z-index: 100000;
+    }
+    
+  </style>
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <% if (sources.length > 1) { %>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+        <% for (var i=0, l=sources.length; i<l; i++) { %>
+          <% var source = sources[i]; %>
+          <a class="source" href="<%= path.basename(destination(source)) %>">
+            <%= path.basename(source) %>
+          </a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <% } %>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class="docs" colspan="2"><h1><%= title %> <a href="javascript:;" id="J_demo">demo</a>
+        <iframe id="J_iframe" src="<%= demo %>" frameborder="0" scrolling="auto" ></iframe></h1>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (var i=0, l=sections.length; i<l; i++) { %>
+    <% var section = sections[i]; %>
+    <tr id='section-<%= i + 1 %>'>
+      <% heading = section.docsHtml.match(/^\s*<(h\d)>/) %>
+      <td class="docs header-docs" colspan="2">
+        <div class="pilwrap <%= heading ? 'for-' + heading[1] : '' %>">
+          <a class="pilcrow" href="#section-<%= i + 1 %>">&#182;</a>
+        </div>
+        <%= section.docsHtml %>
+      </td>
+      <% if (section.codeText.replace(/\s/gm, '') != '') { %>
+      <td class="code">
+        <div class='highlight'><pre><%= section.codeHtml %></pre><a href="javascript:;" class="link close"></a></div>
+      </td>
+      <% } %>
+    </tr>
+    <% } %>
+  </table>
+</div>
+</body>
+<script>
+  (function(win){
+    
+    var addEvent = (function() {
+      if (document.addEventListener) {
+        return function(el, type, fn) {
+          if (el.length) {
+            for (var i = 0, len = el.length; i < len; i++) {
+              addEvent(el[i], type, fn);
+            }
+          } else {
+            el.addEventListener(type, fn, false);
+          }
+        };
+      } else {
+        return function(el, type, fn) {
+          if (el.length) {
+            for (var i = 0, len = el.length; i < len; i++) {
+              addEvent(el[i], type, fn);
+            }
+          } else {
+            el.attachEvent('on' + type, function() {
+              return fn.call(el, window.event);
+            });
+          }
+        };
+      }
+    })();
+    
+    if(document.getElementsByClassName){
+      var links = document.getElementsByClassName('link');
+      for(var i = links.length; i--;){
+        (function(link){
+          addEvent(link, 'click', function(ev){
+            var pre = link.previousSibling;
+            if(link.className.indexOf('open') > -1){
+              link.className = link.className.replace('open', '') + ' close';
+              pre.className = '';
+            }else{
+              link.className = link.className.replace('close', '') + ' open';
+              pre.className = 'narrow';
+            }
+          });
+        })(links[i]);
+      }
+    }
+    
+    var demo = document.getElementById('J_demo');
+    var iframe = document.getElementById('J_iframe');
+    addEvent(demo, 'click', function(ev){
+      if(iframe.style.visibility === 'visible'){
+        iframe.style.visibility = 'hidden'
+      }else{
+        iframe.style.visibility = 'visible'
+      }
+    });
+  })(window);
+</script>
+</html>

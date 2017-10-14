@@ -1,5 +1,5 @@
 {
-    "name": "@damo/cli-docco-plugin",
+    "name": "damo-cli-docco-plugin",
     "version": "0.0.1",
     "main": "index.js",
     "author": "baqian <st403471258@gmail.com>",

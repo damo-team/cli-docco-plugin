@@ -19,9 +19,6 @@
         "marked": ">= 0.2.7",
         "underscore": ">= 1.0.0"
     },
-    "devDependencies": {
-      
-    },
     "repository": {
       "type": "git",
       "url": "https://github.com/baqian/damo-team/cli-docco-plugin.git"

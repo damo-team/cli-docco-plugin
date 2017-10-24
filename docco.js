@@ -175,7 +175,7 @@
   write = function(source, sections, config) {
     var destination, first, firstSection, hasTitle, html, title, demo;
     destination = function(file) {
-      return path.join(config.output, path.basename(file, path.extname(file)) + '.html');
+      return path.join(config.output, path.basename(file.split(path.sep).slice(-2).join('_'), path.extname(file)) + '.html');
     };
     firstSection = _.find(sections, function(section) {
       return section.docsText.length > 0;
